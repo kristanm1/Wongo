@@ -1,0 +1,9 @@
+[submodule "Wongo/external/spdlog"]
+	path = Wongo/external/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "Wongo/external/glfw"]
+	path = Wongo/external/glfw
+	url = https://github.com/glfw/glfw
+[submodule "Wongo/external/imgui"]
+	path = Wongo/external/imgui
+	url = https://github.com/ocornut/imgui.git
