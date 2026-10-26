@@ -17,7 +17,7 @@ namespace Wongo
             std::string path;
         };
 
-        static std::shared_ptr<Texture> Create(Description);
+        static std::unique_ptr<Texture> Create(Description);
 
         virtual void Bind(unsigned int unit) = 0;
     };

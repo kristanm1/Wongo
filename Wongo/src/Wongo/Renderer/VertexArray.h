@@ -12,10 +12,10 @@ namespace Wongo
     class VertexArray : private Wongo::RenderObjectBase
     {
     public:
-        static std::shared_ptr<VertexArray> Create();
+        static std::unique_ptr<VertexArray> Create();
 
-        virtual void AddVertexBuffer(std::shared_ptr<Wongo::VertexBuffer> const& buffer) = 0;
-        virtual void SetIndexBuffer(std::shared_ptr<Wongo::IndexBuffer> const& index) = 0;
+        virtual void AddVertexBuffer(Wongo::VertexBuffer *buffer) = 0;
+        virtual void SetIndexBuffer(Wongo::IndexBuffer *index) = 0;
 
         virtual int GetIndexCount() const = 0;
         virtual unsigned int GetIndexType() const = 0;

@@ -17,8 +17,8 @@ namespace Wongo::OpenGL
         VertexArray();
         ~VertexArray() override;
 
-        void AddVertexBuffer(std::shared_ptr<Wongo::VertexBuffer> const& buffer) override;
-        void SetIndexBuffer(std::shared_ptr<Wongo::IndexBuffer> const& index) override;
+        void AddVertexBuffer(Wongo::VertexBuffer *buffer) override;
+        void SetIndexBuffer(Wongo::IndexBuffer *index) override;
 
         int GetIndexCount() const override { return m_indexCount; }
         unsigned int GetIndexType() const override { return m_indexType; }

@@ -25,7 +25,7 @@ namespace Wongo
 			bool normalize = false;
 		};
 
-		static std::shared_ptr<VertexBuffer> Create(Description desc);
+		static std::unique_ptr<VertexBuffer> Create(Description desc);
 
 		virtual void AddAttribute(int count, bool normalized = false) = 0;
 	};
@@ -40,7 +40,7 @@ namespace Wongo
 			void const* data = nullptr;
 		};
 
-		static std::shared_ptr<IndexBuffer> Create(Description desc);
+		static std::unique_ptr<IndexBuffer> Create(Description desc);
 	};
 
 	class UniformBuffer : private Wongo::RenderObjectBase
@@ -52,7 +52,7 @@ namespace Wongo
 			int size = 0;
 		};
 
-		static std::shared_ptr<UniformBuffer> Create(Description desc);
+		static std::unique_ptr<UniformBuffer> Create(Description desc);
 
         virtual void Set(int offset, int size, void const* data) = 0;
         virtual void Bind(unsigned int index) = 0;

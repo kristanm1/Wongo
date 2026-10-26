@@ -13,9 +13,9 @@ namespace Wongo
     class Program : private Wongo::RenderObjectBase
     {
     public:
-        static std::shared_ptr<Program> Create();
+        static std::unique_ptr<Program> Create();
 
-        virtual void AttachShader(std::shared_ptr<Shader> const& shader) = 0;
+        virtual void AttachShader(Shader* shader) = 0;
         virtual bool Link() = 0;
         virtual void Use() const = 0;
         virtual void Unuse() const = 0;

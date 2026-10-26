@@ -33,7 +33,7 @@ namespace Wongo
             std::string content{};
         };
 
-        static std::shared_ptr<Shader> Create(Description);
+        static std::unique_ptr<Shader> Create(Description);
     };
 
 }

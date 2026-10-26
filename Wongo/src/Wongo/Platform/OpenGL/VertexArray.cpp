@@ -15,9 +15,9 @@ Wongo::OpenGL::VertexArray::~VertexArray()
     GLCall(glDeleteVertexArrays(1, &m_vao));
 }
 
-void Wongo::OpenGL::VertexArray::AddVertexBuffer(std::shared_ptr<Wongo::VertexBuffer> const& buffer)
+void Wongo::OpenGL::VertexArray::AddVertexBuffer(Wongo::VertexBuffer *buffer)
 {
-    VertexBuffer const* pBuffer = static_cast<VertexBuffer*>(buffer.get());
+    VertexBuffer const* pBuffer = static_cast<VertexBuffer*>(buffer);
 
     int offset = 0;
     int typeSize = GetDataTypeSize(pBuffer->m_type);
@@ -33,9 +33,9 @@ void Wongo::OpenGL::VertexArray::AddVertexBuffer(std::shared_ptr<Wongo::VertexBu
     m_bindingIndex++;
 }
 
-void Wongo::OpenGL::VertexArray::SetIndexBuffer(std::shared_ptr<Wongo::IndexBuffer> const& index)
+void Wongo::OpenGL::VertexArray::SetIndexBuffer(Wongo::IndexBuffer *index)
 {
-    IndexBuffer const* pIndex = static_cast<IndexBuffer*>(index.get());
+    IndexBuffer const* pIndex = static_cast<IndexBuffer*>(index);
 
     GLCall(glVertexArrayElementBuffer(m_vao, pIndex->m_ebo));
     m_indexCount = pIndex->m_count;

@@ -15,7 +15,7 @@ namespace Wongo::OpenGL
         Program();
         ~Program() override;
 
-        void AttachShader(std::shared_ptr<Wongo::Shader> const& shader) override;
+        void AttachShader(Wongo::Shader *shader) override;
         bool Link() override;
         void Use() const override;
         void Unuse() const override;

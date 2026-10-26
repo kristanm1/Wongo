@@ -27,8 +27,8 @@ void TestLayer::OnCreate(Wongo::Application& app)
     });
 
     m_va = Wongo::VertexArray::Create();
-    m_va->AddVertexBuffer(m_vb);
-    m_va->SetIndexBuffer(m_ib);
+    m_va->AddVertexBuffer(m_vb.get());
+    m_va->SetIndexBuffer(m_ib.get());
 
     std::shared_ptr<Wongo::Shader> vs = Wongo::Shader::Create({
         Wongo::Shader::Type::Vertex,
@@ -43,8 +43,8 @@ void TestLayer::OnCreate(Wongo::Application& app)
     });
 
     m_program = Wongo::Program::Create();
-    m_program->AttachShader(vs);
-    m_program->AttachShader(fs);
+    m_program->AttachShader(vs.get());
+    m_program->AttachShader(fs.get());
     m_program->Link();
 
     //projection = glm::ortho(-4.0f, 4.0f, -4.0f, 4.0f, -1.0f, 100.0f);

@@ -19,9 +19,9 @@ Wongo::OpenGL::Program::~Program()
     GLCall(glDeleteProgram(m_program));
 }
 
-void Wongo::OpenGL::Program::AttachShader(std::shared_ptr<Wongo::Shader> const& shader)
+void Wongo::OpenGL::Program::AttachShader(Wongo::Shader *shader)
 {
-    GLCall(glAttachShader(m_program, static_cast<Shader*>(shader.get())->m_shader));
+    GLCall(glAttachShader(m_program, static_cast<Shader*>(shader)->m_shader));
 }
 
 bool Wongo::OpenGL::Program::Link()

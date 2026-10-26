@@ -6,12 +6,12 @@
 namespace Wongo
 {
 
-    std::shared_ptr<VertexArray> Wongo::VertexArray::Create()
+    std::unique_ptr<VertexArray> Wongo::VertexArray::Create()
     {
         switch (Wongo::Renderer::GetBackendType())
     {
         case Wongo::Backend::Type::OpenGL:
-            return std::make_shared<Wongo::OpenGL::VertexArray>();
+            return std::make_unique<Wongo::OpenGL::VertexArray>();
         default:
             return nullptr;
     }

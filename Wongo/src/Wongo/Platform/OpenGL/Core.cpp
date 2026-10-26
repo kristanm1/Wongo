@@ -3,6 +3,40 @@
 #include "../../Renderer/Shader.h"
 #include "../../Logger.h"
 
+namespace
+{
+    char const* GetSourceDescription(unsigned int source)
+    {
+        switch (source)
+        {
+            case GL_DEBUG_SOURCE_API:             return "API";
+            case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   return "Window System";
+            case GL_DEBUG_SOURCE_SHADER_COMPILER: return "Shader Compiler";
+            case GL_DEBUG_SOURCE_THIRD_PARTY:     return "Third Party";
+            case GL_DEBUG_SOURCE_APPLICATION:     return "Application";
+            case GL_DEBUG_SOURCE_OTHER:           return "Other";
+            default:                              return "Unknown";
+        }
+    }
+
+    char const* GetTypeDescription(unsigned int type)
+    {
+        switch (type)
+        {
+            case GL_DEBUG_TYPE_ERROR:               return "Error";
+            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: return "Deprecated Behaviour";
+            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  return "Undefined Behaviour";
+            case GL_DEBUG_TYPE_PORTABILITY:         return "Portability";
+            case GL_DEBUG_TYPE_PERFORMANCE:         return "Performance";
+            case GL_DEBUG_TYPE_MARKER:              return "Marker";
+            case GL_DEBUG_TYPE_PUSH_GROUP:          return "Push Group";
+            case GL_DEBUG_TYPE_POP_GROUP:           return "Pop Group";
+            case GL_DEBUG_TYPE_OTHER:               return "Other";
+            default:                                return "Unknown";
+        }
+    }
+}
+
 void Wongo::OpenGL::ClearErrors()
 {
     while (glGetError() != GL_NO_ERROR);
@@ -25,21 +59,27 @@ void Wongo::OpenGL::ErrorCallback(
     unsigned int id,
     unsigned int severity,
     int length,
-    const char *message,
-    const void *userParam)
+    char const* message,
+    void const* userParam)
 {
-    static char const format[] = "OpenGL debug callback: %s\n";
+    // ignore non-significant error/warning codes
+    if(id == 131169 || id == 131185 || id == 131218 || id == 131204)
+    {
+        return;
+    }
+
+    char const format[] = "OpenGL debug callback, source: %s type: %s message: %s\n";
     switch (severity)
     {
         case GL_DEBUG_SEVERITY_NOTIFICATION:
-            LOG_INFO_CORE(format, message);
+            LOG_INFO_CORE(format, GetSourceDescription(source), GetTypeDescription(type), message);
             break;
         case GL_DEBUG_SEVERITY_LOW:
         case GL_DEBUG_SEVERITY_MEDIUM:
-            LOG_WARN_CORE(format, message);
+            LOG_WARN_CORE(format, GetSourceDescription(source), GetTypeDescription(type), message);
             break;
         default:
-            LOG_ERROR_CORE(format, message);
+            LOG_ERROR_CORE(format, GetSourceDescription(source), GetTypeDescription(type), message);
             break;
     }
 
