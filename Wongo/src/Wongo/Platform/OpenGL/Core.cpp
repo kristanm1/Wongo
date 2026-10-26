@@ -5,17 +5,35 @@
 
 namespace
 {
+    static char const *s_sourceApi = "API";
+    static char const *s_sourceWindowSystem = "Window System";
+    static char const *s_sourceShaderCompiler = "Shader Compiler";
+    static char const *s_sourceThirdParty = "Third Party";
+    static char const *s_sourceApplication = "Application";
+
+    static char const* s_typeError = "Error";
+    static char const* s_typeDeprecatedBehviour = "Deprecated Behaviour";
+    static char const* s_typeUndefinedBehaviour = "Undefined Behaviour";
+    static char const* s_typePortability = "Portability";
+    static char const* s_typePerformance = "Performance";
+    static char const* s_typeMarker = "Marker";
+    static char const* s_typePushGroup = "Push Group";
+    static char const* s_typePopGroup = "Pop Group";
+
+    static char const *s_other = "Other";
+    static char const *s_unknown = "Unknown";
+
     char const* GetSourceDescription(unsigned int source)
     {
         switch (source)
         {
-            case GL_DEBUG_SOURCE_API:             return "API";
-            case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   return "Window System";
-            case GL_DEBUG_SOURCE_SHADER_COMPILER: return "Shader Compiler";
-            case GL_DEBUG_SOURCE_THIRD_PARTY:     return "Third Party";
-            case GL_DEBUG_SOURCE_APPLICATION:     return "Application";
-            case GL_DEBUG_SOURCE_OTHER:           return "Other";
-            default:                              return "Unknown";
+            case GL_DEBUG_SOURCE_API:             return s_sourceApi;
+            case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   return s_sourceWindowSystem;
+            case GL_DEBUG_SOURCE_SHADER_COMPILER: return s_sourceShaderCompiler;
+            case GL_DEBUG_SOURCE_THIRD_PARTY:     return s_sourceThirdParty;
+            case GL_DEBUG_SOURCE_APPLICATION:     return s_sourceApplication;
+            case GL_DEBUG_SOURCE_OTHER:           return s_other;
+            default:                              return s_unknown;
         }
     }
 
@@ -23,16 +41,16 @@ namespace
     {
         switch (type)
         {
-            case GL_DEBUG_TYPE_ERROR:               return "Error";
-            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: return "Deprecated Behaviour";
-            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  return "Undefined Behaviour";
-            case GL_DEBUG_TYPE_PORTABILITY:         return "Portability";
-            case GL_DEBUG_TYPE_PERFORMANCE:         return "Performance";
-            case GL_DEBUG_TYPE_MARKER:              return "Marker";
-            case GL_DEBUG_TYPE_PUSH_GROUP:          return "Push Group";
-            case GL_DEBUG_TYPE_POP_GROUP:           return "Pop Group";
-            case GL_DEBUG_TYPE_OTHER:               return "Other";
-            default:                                return "Unknown";
+            case GL_DEBUG_TYPE_ERROR:               return s_typeError;
+            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: return s_typeDeprecatedBehviour;
+            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  return s_typeUndefinedBehaviour;
+            case GL_DEBUG_TYPE_PORTABILITY:         return s_typePortability;
+            case GL_DEBUG_TYPE_PERFORMANCE:         return s_typePerformance;
+            case GL_DEBUG_TYPE_MARKER:              return s_typeMarker;
+            case GL_DEBUG_TYPE_PUSH_GROUP:          return s_typePushGroup;
+            case GL_DEBUG_TYPE_POP_GROUP:           return s_typePopGroup;
+            case GL_DEBUG_TYPE_OTHER:               return s_other;
+            default:                                return s_unknown;
         }
     }
 }
