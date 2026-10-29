@@ -8,24 +8,24 @@ namespace Wongo
     class ScrollMoveEvent : public Event
     {
     public:
-    ScrollMoveEvent(double xoffset, double yoffset)
+    ScrollMoveEvent(float xoffset, float yoffset)
         : m_xoffset(xoffset)
         , m_yoffset(yoffset)
     {}
 
-    EVENT_GET_CATEGORY(EventCategory::ScrollEvent);
-    EVENT_GET_TYPE(Scroll);
+    Type GetType() const override
+    {
+        return Type::ScrollMove;
+    }
 
     std::string ToString() const override
     {
-        std::stringstream ss;
-        ss << "ScrollEvent(xoffset: " << m_xoffset << ", yoffset: " << m_yoffset << ")";
-        return ss.str();
+        return (std::stringstream{} << "ScrollEvent(xoffset: " << m_xoffset << ", yoffset: " << m_yoffset << ")").str();
     }
 
     private:
-        double m_xoffset;
-        double m_yoffset;
+        float m_xoffset;
+        float m_yoffset;
     };
 
 }

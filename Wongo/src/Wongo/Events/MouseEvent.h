@@ -12,14 +12,14 @@ namespace Wongo
             : ButtonEvent(scancode)
         {}
 
-        EVENT_GET_TYPE(MouseButtonPressed);
-        EVENT_GET_CATEGORY(EventCategory::ButtonEvent | EventCategory::MouseEvent);
+        Type GetType() const override
+        {
+            return Type::MouseButtonPressed;
+        }
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseButtonPressedEvent(scancode: " << m_scancode << ")";
-            return ss.str();
+            return (std::stringstream{} << "MouseButtonPressedEvent(scancode: " << m_scancode << ")").str();
         }
     };
 
@@ -30,38 +30,38 @@ namespace Wongo
             : ButtonEvent(scancode)
         {}
 
-        EVENT_GET_TYPE(MouseButtonReleased);
-        EVENT_GET_CATEGORY(EventCategory::ButtonEvent | EventCategory::MouseEvent);
+        Type GetType() const override
+        {
+            return Type::MouseButtonReleased;
+        }
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseButtonReleasedEvent(scancode: " << m_scancode << ")";
-            return ss.str();
+            return (std::stringstream{} << "MouseButtonReleasedEvent(scancode: " << m_scancode << ")").str();
         }
     };
 
     class MouseMoveEvent : public Event
     {
     public:
-        MouseMoveEvent(double xpos, double ypos)
+        MouseMoveEvent(float xpos, float ypos)
             : m_xpos(xpos)
             , m_ypos(ypos)
         {}
 
-        EVENT_GET_TYPE(MouseMoved);
-        EVENT_GET_CATEGORY(EventCategory::MouseEvent);
+        Type GetType() const override
+        {
+            return Type::MouseMoved;
+        }
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseMoveEvent(xpos: " << m_xpos << ", ypos: " << m_ypos << ")";
-            return ss.str();
+            return (std::stringstream{} << "MouseMoveEvent(xpos: " << m_xpos << ", ypos: " << m_ypos << ")").str();
         }
 
     private:
-        double m_xpos;
-        double m_ypos;
+        float m_xpos;
+        float m_ypos;
     };
 
 }

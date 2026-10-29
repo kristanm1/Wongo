@@ -108,7 +108,7 @@ void TestLayer::RenderImGui()
 
 void TestLayer::OnEvent(Wongo::Event const& event)
 {
-    if (event.GetType() == Wongo::EventType::WindowResize)
+    if (event.GetType() == Wongo::Event::Type::WindowResize)
     {
         auto const& resizeEvent = reinterpret_cast<Wongo::WindowResizeEvent const&>(event);
         m_projection = glm::perspective(

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _IMGUI_LAYER_
+#define _IMGUI_LAYER_
 
 struct ImGuiContext;
 
@@ -18,3 +19,5 @@ namespace Wongo
     };
 
 }
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CORE_
+#define _CORE_
 
 #include <string>
 #include <vector>
@@ -26,3 +27,5 @@ namespace Wongo
     );
 
 }
+
+#endif

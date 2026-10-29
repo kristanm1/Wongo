@@ -7,22 +7,16 @@
 namespace Wongo
 {
 
-    class WindowEvent : public Event
-    {
-    public:
-        EVENT_GET_CATEGORY(EventCategory::WindowEvent);
-    protected:
-        WindowEvent()
-        {}
-    };
-
-    class WindowCloseEvent : public WindowEvent
+    class WindowCloseEvent : public Event
     {
     public:
         WindowCloseEvent()
         {}
 
-        EVENT_GET_TYPE(WindowClose);
+        Type GetType() const override
+        {
+            return Type::WindowClose;
+        }
 
         std::string ToString() const override
         {
@@ -30,7 +24,7 @@ namespace Wongo
         }
     };
 
-    class WindowResizeEvent : public WindowEvent
+    class WindowResizeEvent : public Event
     {
     public:
         WindowResizeEvent(int width, int height)
@@ -38,16 +32,24 @@ namespace Wongo
             , m_height(height)
         {}
 
-        EVENT_GET_TYPE(WindowResize);
+        int GetWidth() const
+        {
+            return m_width;
+        }
 
-        int GetWidth() const { return m_width; }
-        int GetHeight() const { return m_height; }
+        int GetHeight() const
+        {
+            return m_height;
+        }
+
+        Type GetType() const override
+        {
+            return Type::WindowResize;
+        }
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "WindowResizeEvent(Width: " << m_width << ", Height: " << m_height << ")";
-            return ss.str();
+            return (std::stringstream{} << "WindowResizeEvent(Width: " << m_width << ", Height: " << m_height << ")").str();
         }
 
     private:

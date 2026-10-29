@@ -42,6 +42,8 @@ target_sources(Wongo
 
       src/Wongo/Utils/Image.h
 
+      src/Wongo/Systems/Event/EventSystem.h
+
       src/Wongo/Events/Event.h
       src/Wongo/Events/KeyboardEvent.h
       src/Wongo/Events/MouseEvent.h
@@ -63,6 +65,8 @@ target_sources(Wongo
     src/Wongo/ImGuiLayer.cpp
 
     src/Wongo/Utils/Image.cpp
+
+    src/Wongo/Systems/Event/EventSystem.cpp
 
     src/Wongo/Renderer/Buffer.cpp
     src/Wongo/Renderer/Core.cpp    

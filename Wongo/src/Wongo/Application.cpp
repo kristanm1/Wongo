@@ -17,9 +17,11 @@
 #include <memory>
 
 Wongo::Application::Application()
-    : m_window(Wongo::Window::Create(Wongo::WindowProperties{}, [this](Event const& event){OnEvent(event);}))
+    : m_window(Wongo::Window::Create(Wongo::WindowProperties{}, m_eventSystem))
     , m_imGuiLayer(std::make_unique<ImGuiLayer>(m_window->GetNativeWindow()))
 {
+    m_eventSystem.Subscribe("Application", [this](Event const& event){ OnEvent(event); });
+
     Wongo::Renderer::CreateBackend(Wongo::Backend::Type::OpenGL);
 }
 
@@ -45,15 +47,15 @@ void Wongo::Application::Run()
 
 void Wongo::Application::OnEvent(Wongo::Event const& event)
 {
-    //LOG_INFO_CORE("OnEvent %s", event.ToString().c_str());
+    LOG_INFO_CORE("OnEvent %s", event.ToString().c_str());
 
-    if (event.GetType() == Wongo::EventType::WindowClose)
+    if (event.GetType() == Wongo::Event::Type::WindowClose)
     {
         m_running = false;
         event.Handle();
     }
 
-    if (event.GetType() == Wongo::EventType::WindowResize)
+    if (event.GetType() == Wongo::Event::Type::WindowResize)
     {
         auto const& resizeEvent = reinterpret_cast<WindowResizeEvent const&>(event);
         Wongo::Renderer::SetViewport(0, 0, resizeEvent.GetWidth(), resizeEvent.GetHeight());

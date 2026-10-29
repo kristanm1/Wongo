@@ -1,7 +1,9 @@
-#pragma once
+#ifndef _APPLICATION_
+#define _APPLICATION_
 
 #include "Core.h"
 #include "Events/Event.h"
+#include "Systems/Event/EventSystem.h"
 #include "Renderer/Renderer.h"
 #include "Layer.h"
 #include "ImGuiLayer.h"
@@ -35,15 +37,18 @@ namespace Wongo
 
     protected:
         bool m_running = true;
-        std::unique_ptr<Wongo::Window> m_window;
-        std::unique_ptr<Wongo::ImGuiLayer> m_imGuiLayer;
-        std::vector<std::unique_ptr<Wongo::Layer>> m_layers{};
+        std::unique_ptr<Window> m_window;
+        std::unique_ptr<ImGuiLayer> m_imGuiLayer;
+        std::vector<std::unique_ptr<Layer>> m_layers{};
+        EventSystem m_eventSystem{};
 
     private:
-        void OnEvent(Wongo::Event const& event);
+        void OnEvent(Event const& event);
     };
 
     // To be defined in Client
     Application* CreateApplication();
 
 }
+
+#endif

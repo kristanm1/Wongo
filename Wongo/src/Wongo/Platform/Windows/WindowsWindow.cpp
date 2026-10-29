@@ -4,6 +4,7 @@
 #include "../../Events/KeyboardEvent.h"
 #include "../../Events/MouseEvent.h"
 #include "../../Events/ScrollEvent.h"
+#include "../../Systems/Event/EventSystem.h"
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <cassert>
@@ -17,7 +18,7 @@ void Wongo::WindowsWindow::ErrorCallback(int errorNumber, const char *descriptio
 void Wongo::WindowsWindow::WindowCloseCallback(GLFWwindow *window)
 {
     WindowData* data = reinterpret_cast<WindowData*>(glfwGetWindowUserPointer(window));
-    data->m_callback(WindowCloseEvent());
+    data->m_eventSystem.TriggerEvent(WindowCloseEvent());
 }
 
 void Wongo::WindowsWindow::WindowResizeCallback(GLFWwindow *window, int width, int height)
@@ -25,7 +26,7 @@ void Wongo::WindowsWindow::WindowResizeCallback(GLFWwindow *window, int width, i
     WindowData* data = reinterpret_cast<WindowData*>(glfwGetWindowUserPointer(window));
     data->m_width = static_cast<unsigned int>(width);
     data->m_height = static_cast<unsigned int>(height);
-    data->m_callback(WindowResizeEvent(width, height));
+    data->m_eventSystem.TriggerEvent(WindowResizeEvent(width, height));
 }
 
 void Wongo::WindowsWindow::WindowKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -34,13 +35,13 @@ void Wongo::WindowsWindow::WindowKeyCallback(GLFWwindow* window, int key, int sc
     switch (action)
     {
         case GLFW_PRESS:
-            data->m_callback(KeyboardPressedEvent(scancode, 0));
+            data->m_eventSystem.TriggerEvent(KeyboardPressedEvent(scancode, 0));
             break;
         case GLFW_REPEAT:
-            data->m_callback(KeyboardPressedEvent(scancode, 1));
+            data->m_eventSystem.TriggerEvent(KeyboardPressedEvent(scancode, 1));
             break;
         case GLFW_RELEASE:
-            data->m_callback(KeyboardReleasedEvent(scancode));
+            data->m_eventSystem.TriggerEvent(KeyboardReleasedEvent(scancode));
             break;
     }
 }
@@ -51,10 +52,10 @@ void Wongo::WindowsWindow::WindowMouseButtonCallback(GLFWwindow* window, int but
     switch (action)
     {
         case GLFW_PRESS:
-            data->m_callback(MouseButtonPressedEvent(button));
+            data->m_eventSystem.TriggerEvent(MouseButtonPressedEvent(button));
             break;
         case GLFW_RELEASE:
-            data->m_callback(MouseButtonReleasedEvent(button));
+            data->m_eventSystem.TriggerEvent(MouseButtonReleasedEvent(button));
             break;
     }
 }
@@ -62,17 +63,17 @@ void Wongo::WindowsWindow::WindowMouseButtonCallback(GLFWwindow* window, int but
 void Wongo::WindowsWindow::WindowMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
 {
     WindowData* data = reinterpret_cast<WindowData*>(glfwGetWindowUserPointer(window));
-    data->m_callback(MouseMoveEvent(xpos, ypos));
+    data->m_eventSystem.TriggerEvent(MouseMoveEvent(xpos, ypos));
 }
 
 void Wongo::WindowsWindow::WindowScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
     WindowData* data = reinterpret_cast<WindowData*>(glfwGetWindowUserPointer(window));
-    data->m_callback(ScrollMoveEvent(xoffset, yoffset));
+    data->m_eventSystem.TriggerEvent(ScrollMoveEvent(xoffset, yoffset));
 }
 
-Wongo::WindowsWindow::WindowsWindow(WindowProperties const& properties, EventCallback callback)
-    : m_data(properties.m_title, properties.m_width, properties.m_height, callback)
+Wongo::WindowsWindow::WindowsWindow(WindowProperties const& properties, EventSystem& eventSystem)
+    : m_data(properties.m_title, properties.m_width, properties.m_height, eventSystem)
 {
     int glfwInitStatus = glfwInit();
     assert(glfwInitStatus && "Could not initialize GLFW!");
@@ -133,7 +134,7 @@ void Wongo::WindowsWindow::Update()
     glfwPollEvents();
 }
 
-std::unique_ptr<Wongo::Window> Wongo::Window::Create(WindowProperties const& properties, EventCallback callback)
+std::unique_ptr<Wongo::Window> Wongo::Window::Create(WindowProperties const& properties, Wongo::EventSystem& eventSystem)
 {
-    return std::make_unique<Wongo::WindowsWindow>(properties, callback);
+    return std::make_unique<Wongo::WindowsWindow>(properties, eventSystem);
 }

@@ -10,23 +10,23 @@ namespace Wongo
     class KeyboardPressedEvent : public ButtonEvent
     {
     public:
-        KeyboardPressedEvent(int scancode, int repeat)
+        KeyboardPressedEvent(int scancode, bool repeat)
             : ButtonEvent(scancode)
             , m_repeat(repeat)
         {}
 
-        EVENT_GET_TYPE(KeyboardPressed);
-        EVENT_GET_CATEGORY(EventCategory::ButtonEvent | EventCategory::KeyboardEvent);
+        Type GetType() const override
+        {
+            return Type::KeyboardPressed;
+        }
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "KeyPressedEvent(KeyCode: " << m_scancode << ", KeyRepeat: " << m_repeat << ")";
-            return ss.str();
+            return (std::stringstream{} << "KeyPressedEvent(KeyCode: " << m_scancode << ", KeyRepeat: " << m_repeat << ")").str();
         }
 
     private:
-        int m_repeat;
+        bool m_repeat;
     };
 
     class KeyboardReleasedEvent : public ButtonEvent
@@ -36,14 +36,14 @@ namespace Wongo
             : ButtonEvent(scancode)
         {}
 
-        EVENT_GET_TYPE(KeyboardReleased);
-        EVENT_GET_CATEGORY(EventCategory::ButtonEvent | EventCategory::KeyboardEvent);
+        Type GetType() const override
+        {
+            return Type::KeyboardReleased;
+        }
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "KeyReleasedEvent(" << m_scancode << ")";
-            return ss.str();
+            return (std::stringstream{} << "KeyReleasedEvent(" << m_scancode << ")").str();
         }
     };
 

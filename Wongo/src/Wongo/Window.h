@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Events/Event.h"
-
 #include <functional>
 #include <memory>
 
 namespace Wongo
 {
+
+    class Event;
+    class EventSystem;
 
     struct WindowProperties
     {
@@ -39,14 +40,9 @@ namespace Wongo
 
         virtual void* GetNativeWindow() const = 0;
 
-        virtual void SetEventCallback(EventCallback callback) = 0;
-
-    protected:
-        EventCallback m_callback;
-
     public:
         // Defined in every platform window
-        static std::unique_ptr<Window> Create(Wongo::WindowProperties const& properties, EventCallback callback);
+        static std::unique_ptr<Window> Create(Wongo::WindowProperties const& properties, Wongo::EventSystem& eventSystem);
     };
 
 }

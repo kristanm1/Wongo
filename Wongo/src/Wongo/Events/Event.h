@@ -6,38 +6,36 @@
 namespace Wongo
 {
 
-    enum class EventType
-    {
-        None = 0,
-        WindowClose, WindowResize,
-        KeyboardPressed, KeyboardReleased,
-        MouseButtonPressed, MouseButtonReleased, MouseMoved,
-        Scroll,
-    };
-
-    enum EventCategory
-    {
-        None = 0,
-        WindowEvent = BIT(0),
-        ButtonEvent = BIT(1),
-        KeyboardEvent = BIT(2),
-        MouseEvent = BIT(3),
-        ScrollEvent = BIT(4),
-
-        InputEvent = ButtonEvent | KeyboardEvent | MouseEvent | ScrollEvent,
-    };
-
     class Event
     {
     public:
-        virtual EventType GetType() const = 0;
-        virtual EventCategory GetCatergory() const = 0;
+
+        enum class Type
+        {
+            None = -1,
+            WindowClose,
+            WindowResize,
+            KeyboardPressed,
+            KeyboardReleased,
+            MouseButtonPressed,
+            MouseButtonReleased,
+            MouseMoved,
+            ScrollMove,
+            Count,
+        };
+
+        virtual Type GetType() const = 0;
         virtual std::string ToString() const = 0;
 
-        void Handle() const { m_isHandled = true; }
-        bool IsHandled() const { return m_isHandled; }
+        void Handle() const
+        {
+            m_isHandled = true;
+        }
 
-        bool IsInCategory(EventCategory category) const { return GetCatergory() & category; }
+        bool IsHandled() const
+        {
+            return m_isHandled;
+        }
 
     private:
         mutable bool m_isHandled = false;
@@ -58,11 +56,5 @@ namespace Wongo
 
         int m_scancode;
     };
-
-#define EVENT_GET_TYPE(event_type) EventType GetType() const override \
-    { return EventType::event_type; }
-
-#define EVENT_GET_CATEGORY(event_category) EventCategory GetCatergory() const override \
-    { return static_cast<EventCategory>(event_category); }
 
 }

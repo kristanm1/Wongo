@@ -25,7 +25,7 @@ namespace Wongo
     class WindowsWindow : public Window
     {
     public:
-        WindowsWindow(WindowProperties const& properties, EventCallback callback);
+        WindowsWindow(WindowProperties const& properties, EventSystem& eventSystem);
         
         ~WindowsWindow() override;
         void Update() override;
@@ -34,24 +34,22 @@ namespace Wongo
         unsigned int GetHeight() const override { return m_data.m_height; }
         void* GetNativeWindow() const override { return m_window; };
 
-        void SetEventCallback(EventCallback callback) override { m_callback = callback; }
-
     public:
     private:
 
         struct WindowData
         {
-            WindowData(std::string title, unsigned int width, unsigned int height, EventCallback callback)
+            WindowData(std::string title, unsigned int width, unsigned int height, EventSystem& eventSystem)
                 : m_title(title)
                 , m_width(width)
                 , m_height(height)
-                , m_callback(callback)
+                , m_eventSystem(eventSystem)
             {}
 
             std::string m_title;
             unsigned int m_width;
             unsigned int m_height;
-            EventCallback m_callback;
+            EventSystem& m_eventSystem;
         };
 
         GLFWwindow* m_window;

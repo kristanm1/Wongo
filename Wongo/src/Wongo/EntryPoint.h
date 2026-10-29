@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _ENTRY_POINT_
+#define _ENTRY_POINT_
 
 #ifdef WONGO_PLATFORM_WINDOWS
 
@@ -11,4 +12,5 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+#endif
 #endif
