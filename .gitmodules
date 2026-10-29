@@ -7,3 +7,5 @@
 [submodule "Wongo/external/imgui"]
 	path = Wongo/external/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule ".\\Wongo\\external\\imgui\\"]
+	branch = docking
